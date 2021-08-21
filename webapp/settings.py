@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'assets'
-STATICFILES_DIRS = [BASE_DIR /'startics',]
+STATICFILES_DIRS = [BASE_DIR /'statics',]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
