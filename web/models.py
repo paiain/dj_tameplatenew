@@ -1,57 +1,17 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 
 
-CATEGORY_CHOTCES = [
-    (1, 'ข่าวประกาศ'),
-    (2, 'โฆษณา'),
-    (3, 'บันทึก'),
-]
+class Reporter(models.Model):
+    email = models.EmailField()
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
 
-PREFIX_CHTCES = [
-    (1, 'นาย'),
-    (2, 'นางสาว'),
-    (3, 'นาง'),
-]
-
-# Create your models here.
+    def __str__(self) -> str:
+        return self.first_name + " " + self.last_name
 
 
-class Blog(models.Model):
-    """Model definition for Blog."""
-
-    # TODO: Define fields here
-    title = models.CharField(max_length=255)
-    category = models.IntegerField(choices=CATEGORY_CHOTCES, default=1)
-    content = models.TextField()
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        """Meta definition for Blog."""
-
-        verbose_name = 'Blog'
-        verbose_name_plural = 'Blogs'
-
-    def __str__(self):
-        """Unicode representation of Blog."""
-        return self.title
-
-
-class Author(models.Model):
-    """Model definition for Author."""
-
-    # TODO: Define fields here
-    prefix = models.IntegerField(choices=PREFIX_CHTCES)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    dob = models.DateField()
-
-    class Meta:
-        """Meta definition for Author."""
-
-        verbose_name = 'Author'
-        verbose_name_plural = 'Authors'
-
-    def __str__(self):
-        """Unicode representation of Author."""
-        return self.first_name+" "+self.last_name
+class Article(models.Model):
+    head_line = models.CharField(max_length=255)
+    pub_date = models.DateField()
+    reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE)
